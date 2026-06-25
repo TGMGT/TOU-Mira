@@ -1,9 +1,9 @@
 using System;
 using HarmonyLib;
 
-namespace YourExistingPluginNamespace
+namespace TeytofixSetrunfs
 {
-    public static class VanillaSettingsCrashPatch
+    public static class CrashDuzPatch
     {
         [HarmonyPatch(typeof(PassiveButton), nameof(PassiveButton.ReceiveClickDown))]
         [HarmonyPrefix]
