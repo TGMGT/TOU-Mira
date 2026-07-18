@@ -56,8 +56,8 @@ public sealed class ClericRole(IntPtr cppPtr) : CrewmateRole(cppPtr), ITownOfUsR
     {
         get
         {
-            return new List<CustomButtonWikiDescription>
-            {
+            return
+            [
                 new(TouLocale.GetParsed($"TouRole{LocaleKey}Barrier", "Barrier"),
                     TouLocale.GetParsed($"TouRole{LocaleKey}BarrierWikiDescription").Replace("<BarrierCooldown>",
                         $"{OptionGroupSingleton<ClericOptions>.Instance.BarrierCooldown}"),
@@ -65,7 +65,7 @@ public sealed class ClericRole(IntPtr cppPtr) : CrewmateRole(cppPtr), ITownOfUsR
                 new(TouLocale.GetParsed($"TouRole{LocaleKey}Cleanse", "Cleanse"),
                     TouLocale.GetParsed($"TouRole{LocaleKey}CleanseWikiDescription"),
                     TouCrewAssets.CleanseSprite)
-            };
+            ];
         }
     }
 
@@ -75,6 +75,7 @@ public sealed class ClericRole(IntPtr cppPtr) : CrewmateRole(cppPtr), ITownOfUsR
 
     public CustomRoleConfiguration Configuration => new(this)
     {
+        IconTmp = TmpSpriteUtils.CreateSpriteAsset(TouRoleIcons.Cleric.LoadAsset(), "TouMira.Role.Crewmate.Cleric", 1.45f),
         IntroSound = TouAudio.PotionIntro,
         OptionsScreenshot = TouBanners.ClericRoleBanner,
         Icon = TouRoleIcons.Cleric

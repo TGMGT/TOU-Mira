@@ -61,7 +61,7 @@ public static class EndGamePatches
             {
                 EndGameData.PlayerRecords.Add(new EndGameData.PlayerRecord
                 {
-                    ChatSummaryTitle = $"{playerControl.Data.PlayerName} - {TouLocale.Get("TouRoleSpectator")}",
+                    ChatSummaryTitle = $"{playerControl.Data.PlayerName} - {MiscUtils.GetRoleTmpIcon((RoleTypes)RoleId.Get<SpectatorRole>())}{TouLocale.Get("TouRoleSpectator")}",
                     ChatSummaryRoleInfo = string.Empty,
                     ChatSummaryStats = string.Empty,
                     ChatSummaryCod = string.Empty,
@@ -305,7 +305,7 @@ public static class EndGamePatches
             {
                 playerName.Append(playerControl.Data.PlayerName);
             }
-            summaryTitle.Append(TownOfUsPlugin.Culture, $"{playerName.ToString()} - {latestRole}{modifierHolder.ToString()}");
+            summaryTitle.Append(TownOfUsPlugin.Culture, $"{playerName.ToString()} - {MiscUtils.GetRoleTmpIcon(playerRoleType)}{latestRole}{modifierHolder.ToString()}");
 
             var alliance = playerControl.GetModifiers<AllianceGameModifier>().FirstOrDefault();
             if (alliance != null)
@@ -384,17 +384,17 @@ public static class EndGamePatches
             var role2 = string.Join(" ", data.RoleStringShort);
             if (count % 2 == 0)
             {
-                roleSummaryText2.AppendLine(TownOfUsPlugin.Culture, $"{data.PlayerName} - {role2}");
+                roleSummaryText2.AppendLine(TownOfUsPlugin.Culture, $"{data.PlayerName} - {MiscUtils.GetRoleTmpIcon(data.LastRole)}{role2}");
             }
             else
             {
-                roleSummaryText1.AppendLine(TownOfUsPlugin.Culture, $"{data.PlayerName} - {role2}");
+                roleSummaryText1.AppendLine(TownOfUsPlugin.Culture, $"{data.PlayerName} - {MiscUtils.GetRoleTmpIcon(data.LastRole)}{role2}");
             }
 
             count++;
-            roleSummaryTextFull.AppendLine(TownOfUsPlugin.Culture, $"{data.PlayerName} - {role}");
-            normalSummary.AppendLine(TownOfUsPlugin.Culture, $"<size=62%>{data.PlayerName} - {role}");
-            basicSummary.AppendLine(TownOfUsPlugin.Culture, $"<size=62%>{data.PlayerName} - {role2}");
+            roleSummaryTextFull.AppendLine(TownOfUsPlugin.Culture, $"{data.PlayerName} - {MiscUtils.GetRoleTmpIcon(data.LastRole)}{role}");
+            normalSummary.AppendLine(TownOfUsPlugin.Culture, $"<size=62%>{data.PlayerName} - {MiscUtils.GetRoleTmpIcon(data.LastRole)}{role}");
+            basicSummary.AppendLine(TownOfUsPlugin.Culture, $"<size=62%>{data.PlayerName} - {MiscUtils.GetRoleTmpIcon(data.LastRole)}{role2}");
 
             segmentedSummary.AppendLine(TownOfUsPlugin.Culture, $"<size=70%>{data.ChatSummaryTitle}</size>");
             segmentedSummary.Append(TownOfUsPlugin.Culture, $"<size=62%>");
@@ -540,13 +540,10 @@ public static class EndGamePatches
             foreach (var player in array)
             {
                 var realPlayer = winnerArray.FirstOrDefault(x => x.PlayerName == player.cosmetics.nameText.text);
-                if (realPlayer == null)
-                {
-                    realPlayer = winnerArray.FirstOrDefault(x => x.Outfit.HatId == player.cosmetics.hat.Hat.ProdId
+                realPlayer ??= winnerArray.FirstOrDefault(x => x.Outfit.HatId == player.cosmetics.hat.Hat.ProdId
                                                                  && x.Outfit.ColorId ==
                                                                  player.cosmetics
                                                                      .ColorId /*&& HatManager.Instance.GetPetById(x.Outfit.PetId) == player.cosmetics.currentPet */);
-                }
 
                 if (realPlayer == null)
                 {
@@ -666,19 +663,19 @@ public static class EndGamePatches
             PlayerRecords.Clear();
         }
 
-        public sealed class PlayerRecord
+        public sealed record PlayerRecord
         {
-            public string? ChatSummaryTitle { get; set; }
-            public string? ChatSummaryRoleInfo { get; set; }
-            public string? ChatSummaryStats { get; set; }
-            public string? ChatSummaryCod { get; set; }
-            public string? PlayerName { get; set; }
-            public string? RoleString { get; set; }
-            public string? RoleStringShort { get; set; }
-            public bool Winner { get; set; }
-            public RoleTypes LastRole { get; set; }
-            public ModdedRoleTeams Team { get; set; }
-            public byte PlayerId { get; set; }
+            public string? ChatSummaryTitle { get; init; }
+            public string? ChatSummaryRoleInfo { get; init; }
+            public string? ChatSummaryStats { get; init; }
+            public string? ChatSummaryCod { get; init; }
+            public string? PlayerName { get; init; }
+            public string? RoleString { get; init; }
+            public string? RoleStringShort { get; init; }
+            public bool Winner { get; init; }
+            public RoleTypes LastRole { get; init; }
+            public ModdedRoleTeams Team { get; init; }
+            public byte PlayerId { get; init; }
         }
     }
 
@@ -1068,15 +1065,15 @@ public static class EndGamePatches
             PlayerMeetingRecords.Clear();
         }
 
-        public sealed class PlayerMeetingRecord
+        public sealed record PlayerMeetingRecord
         {
-            public string PlayerNameUncolored { get; set; }
-            public string PlayerNameColored { get; set; }
-            public string PlayerNameUncoloredFull { get; set; }
-            public string PlayerNameColoredFull { get; set; }
-            public Color PlayerColorUncolored { get; set; }
-            public Color PlayerColorColored { get; set; }
-            public byte PlayerId { get; set; }
+            public string PlayerNameUncolored { get; init; }
+            public string PlayerNameColored { get; init; }
+            public string PlayerNameUncoloredFull { get; init; }
+            public string PlayerNameColoredFull { get; init; }
+            public Color PlayerColorUncolored { get; init; }
+            public Color PlayerColorColored { get; init; }
+            public byte PlayerId { get; init; }
         }
     }
 }

@@ -67,6 +67,7 @@ public sealed class SnitchRole(IntPtr cppPtr) : CrewmateRole(cppPtr), ITownOfUsR
 
     public CustomRoleConfiguration Configuration => new(this)
     {
+        IconTmp = TmpSpriteUtils.CreateSpriteAsset(TouRoleIcons.Snitch.LoadAsset(), "TouMira.Role.Crewmate.Snitch", 1.45f),
         Icon = TouRoleIcons.Snitch,
         OptionsScreenshot = TouBanners.SnitchRoleBanner,
         IntroSound = TouAudio.ToppatIntroSound
@@ -329,12 +330,8 @@ public sealed class SnitchRole(IntPtr cppPtr) : CrewmateRole(cppPtr), ITownOfUsR
         }
         // Set to null so CreateSnitchArrowsSilent() can recreate arrows when needed
         _snitchArrows = null;
-
-        if (SnitchRevealArrow != null)
-        {
-            SnitchRevealArrow.gameObject.DeepDestroy();
-            SnitchRevealArrow = null;
-        }
+        SnitchRevealArrow?.gameObject.DeepDestroy();
+        SnitchRevealArrow = null;
 
         // Remove modifiers from all players explicitly to ensure they're cleared on all clients
         foreach (var player in PlayerControl.AllPlayerControls)
@@ -386,7 +383,7 @@ public sealed class SnitchRole(IntPtr cppPtr) : CrewmateRole(cppPtr), ITownOfUsR
         {
             Coroutines.Start(MiscUtils.CoFlash(TownOfUsColors.Snitch, alpha: 0.5f));
         }
-        _snitchArrows = new Dictionary<byte, ArrowBehaviour>();
+        _snitchArrows = [];
         var imps = Helpers.GetAlivePlayers().Where(plr => plr.Data.Role.IsImpostor && !plr.IsTraitor());
         var traitor = Helpers.GetAlivePlayers().FirstOrDefault(plr => plr.IsTraitor());
         imps.ToList().ForEach(imp => CreateSnitchArrow(imp, TownOfUsColors.Impostor));

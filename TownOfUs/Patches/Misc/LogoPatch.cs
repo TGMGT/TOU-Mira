@@ -49,7 +49,7 @@ public static class LogoPatch
             }
         }
 
-        Dictionary<RoleBehaviour, RoleTypes> vanillaRoles = new Dictionary<RoleBehaviour, RoleTypes>()
+        Dictionary<RoleBehaviour, RoleTypes> vanillaRoles = new()
         {
             { RoleManager.Instance.GetRole(RoleTypes.Scientist), RoleTypes.Scientist },
             { RoleManager.Instance.GetRole(RoleTypes.Noisemaker), RoleTypes.Noisemaker },
@@ -64,6 +64,36 @@ public static class LogoPatch
         {
             SoftWikiEntries.RegisterVanillaRoleEntry(rolePair.Key, rolePair.Value);
         }
+        TmpSpriteUtils.CreateSpriteAsset(TouRoleIcons.Neutral.LoadAsset(), "AmongUs.Role.Custom",
+            1.45f);
+        TmpSpriteUtils.CreateSpriteAsset(TouRoleIcons.Neutral.LoadAsset(), "AmongUs.Role.Neutral",
+            1.45f);
+        TmpSpriteUtils.CreateSpriteAsset(TouRoleIcons.Crewmate.LoadAsset(), "AmongUs.Role.Crewmate",
+            1.45f);
+        TmpSpriteUtils.CreateSpriteAsset(TouRoleIcons.Impostor.LoadAsset(), "AmongUs.Role.Impostor",
+            1.45f);
+        TmpSpriteUtils.CreateSpriteAsset(TouRoleIcons.Scientist.LoadAsset(), "AmongUs.Role.Scientist",
+            1.45f);
+        TmpSpriteUtils.CreateSpriteAsset(TouRoleIcons.Engineer.LoadAsset(), "AmongUs.Role.Engineer",
+            1.45f);
+        TmpSpriteUtils.CreateSpriteAsset(TouRoleIcons.GuardianAngel.LoadAsset(), "AmongUs.Role.GuardianAngel",
+            1.45f);
+        TmpSpriteUtils.CreateSpriteAsset(TouRoleIcons.Shapeshifter.LoadAsset(), "AmongUs.Role.Shapeshifter",
+            1.45f);
+        TmpSpriteUtils.CreateSpriteAsset(TouRoleIcons.Crewmate.LoadAsset(), "AmongUs.Role.CrewmateGhost",
+            1.45f);
+        TmpSpriteUtils.CreateSpriteAsset(TouRoleIcons.Impostor.LoadAsset(), "AmongUs.Role.ImpostorGhost",
+            1.45f);
+        TmpSpriteUtils.CreateSpriteAsset(TouRoleIcons.Noisemaker.LoadAsset(), "AmongUs.Role.Noisemaker",
+            1.45f);
+        TmpSpriteUtils.CreateSpriteAsset(TouRoleIcons.Phantom.LoadAsset(), "AmongUs.Role.Phantom",
+            1.45f);
+        TmpSpriteUtils.CreateSpriteAsset(TouRoleIcons.Tracker.LoadAsset(), "AmongUs.Role.Tracker",
+            1.45f);
+        TmpSpriteUtils.CreateSpriteAsset(TouRoleIcons.Detective.LoadAsset(), "AmongUs.Role.Detective",
+            1.45f);
+        TmpSpriteUtils.CreateSpriteAsset(TouRoleIcons.Viper.LoadAsset(), "AmongUs.Role.Viper",
+            1.45f);
 
         var newLogo = GameObject.Find("LOGO-AU");
         var sizer = GameObject.Find("Sizer");
@@ -73,10 +103,7 @@ public static class LogoPatch
             GameLogo.sprite = TouAssets.Banner.LoadAsset();
         }
 
-        if (sizer != null)
-        {
-            sizer.GetComponent<AspectSize>().PercentWidth = 0.3f;
-        }
+        sizer?.GetComponent<AspectSize>().PercentWidth = 0.3f;
 
         var menuBg = GameObject.Find("BackgroundTexture");
 

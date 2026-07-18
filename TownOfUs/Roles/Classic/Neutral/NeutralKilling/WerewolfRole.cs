@@ -47,12 +47,12 @@ public sealed class WerewolfRole(IntPtr cppPtr)
     {
         get
         {
-            return new List<CustomButtonWikiDescription>
-            {
+            return
+            [
                 new(TouLocale.GetParsed($"TouRole{LocaleKey}Rampage", "Rampage"),
                     TouLocale.GetParsed($"TouRole{LocaleKey}RampageWikiDescription"),
                     TouNeutAssets.RampageSprite)
-            };
+            ];
         }
     }
 
@@ -62,6 +62,7 @@ public sealed class WerewolfRole(IntPtr cppPtr)
 
     public CustomRoleConfiguration Configuration => new(this)
     {
+        IconTmp = TmpSpriteUtils.CreateSpriteAsset(TouRoleIcons.Werewolf.LoadAsset(), "TouMira.Role.Neutral.Werewolf", 1.45f),
         CanUseVent = OptionGroupSingleton<WerewolfOptions>.Instance.CanVent /* && (Rampaging || Player.inVent)*/,
         IntroSound = TouAudio.WerewolfRampageSound,
         OptionsScreenshot = TouBanners.NeutralRoleBanner,

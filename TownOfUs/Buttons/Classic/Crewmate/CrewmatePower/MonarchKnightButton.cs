@@ -1,7 +1,6 @@
 using MiraAPI.GameOptions;
 using MiraAPI.Modifiers;
 using MiraAPI.Utilities;
-using MiraAPI.Utilities.Assets;
 using Reactor.Utilities;
 using TownOfUs.Events;
 using TownOfUs.Modifiers;
@@ -162,10 +161,7 @@ public sealed class MonarchKnightButton : TownOfUsRoleButton<MonarchRole, Player
             if (TextOutlineColor != Color.clear)
             {
                 SetTextOutline(TextOutlineColor);
-                if (Button != null)
-                {
-                    Button.usesRemainingSprite.color = TextOutlineColor;
-                }
+                Button?.usesRemainingSprite.color = TextOutlineColor;
             }
 
             TownOfUsColors.UseBasic = LocalSettingsTabSingleton<TownOfUsLocalRoleSettings>.Instance

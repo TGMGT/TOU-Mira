@@ -1,5 +1,4 @@
 ﻿using MiraAPI.GameOptions;
-using MiraAPI.Utilities.Assets;
 using Reactor.Utilities.Extensions;
 using TownOfUs.Options.Roles.Crewmate;
 using TownOfUs.Roles.Crewmate;
@@ -81,10 +80,7 @@ public sealed class EngineerFixButton : TownOfUsRoleButton<EngineerTouRole>, ILe
                 if (TextOutlineColor != Color.clear)
                 {
                     SetTextOutline(TextOutlineColor);
-                    if (Button != null)
-                    {
-                        Button.usesRemainingSprite.color = TextOutlineColor;
-                    }
+                    Button?.usesRemainingSprite.color = TextOutlineColor;
                 }
 
                 TownOfUsColors.UseBasic = LocalSettingsTabSingleton<TownOfUsLocalRoleSettings>.Instance

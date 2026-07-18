@@ -1,5 +1,4 @@
 ﻿using MiraAPI.GameOptions;
-using MiraAPI.Utilities.Assets;
 using TownOfUs.Options.Modifiers;
 using TownOfUs.Roles.Other;
 using UnityEngine;
@@ -8,6 +7,10 @@ namespace TownOfUs.Modifiers.Game;
 
 public class DoubleShotModifier : TouGameModifier, IWikiDiscoverable
 {
+    public override ModifierUiConfiguration Configuration => new(
+        TownOfUsColors.DoubleShot,
+        TmpSpriteUtils.CreateSpriteAsset(TouModifierIcons.DoubleShot.LoadAsset(),
+            "TouMira.Modifier.Assailant.DoubleShot", 1.45f));
     public override string LocaleKey => "DoubleShot";
     public override string ModifierName => TouLocale.Get($"TouModifier{LocaleKey}");
     public override string IntroInfo => TouLocale.GetParsed($"TouModifier{LocaleKey}IntroBlurb");

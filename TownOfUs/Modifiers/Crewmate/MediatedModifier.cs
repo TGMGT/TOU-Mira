@@ -3,6 +3,7 @@ using MiraAPI.GameOptions;
 using MiraAPI.Hud;
 using MiraAPI.Modifiers;
 using MiraAPI.Modifiers.Types;
+using MiraAPI.Utilities;
 using Reactor.Utilities;
 using TownOfUs.Buttons.Crewmate;
 using TownOfUs.Events.TouEvents;
@@ -77,10 +78,7 @@ public sealed class MediatedModifier(byte mediumId) : TimedModifier
             return;
         }
 
-        if (_medium != null)
-        {
-            _medium.MediatedPlayers.Remove(this);
-        }
+        _medium?.MediatedPlayers.Remove(this);
 
         if (_mediumPlayer.AmOwner)
         {
@@ -97,10 +95,7 @@ public sealed class MediatedModifier(byte mediumId) : TimedModifier
             }
         }
 
-        if (_arrow != null)
-        {
-            _arrow.gameObject.DeepDestroy();
-        }
+        _arrow?.gameObject.DeepDestroy();
     }
 
     public override void FixedUpdate()

@@ -56,15 +56,15 @@ public sealed class MirrorcasterRole(IntPtr cppPtr) : CrewmateRole(cppPtr), ITou
     {
         get
         {
-            return new List<CustomButtonWikiDescription>
-            {
+            return
+            [
                 new(TouLocale.GetParsed($"TouRole{LocaleKey}MagicMirror", "Magic Mirror"),
                     TouLocale.GetParsed($"TouRole{LocaleKey}MagicMirrorWikiDescription"),
                     TouCrewAssets.MagicMirrorSprite),
                 new(TouLocale.GetParsed($"TouRole{LocaleKey}Unleash", "Unleash"),
                     TouLocale.GetParsed($"TouRole{LocaleKey}UnleashWikiDescription"),
                     TouCrewAssets.UnleashSprite)
-            };
+            ];
         }
     }
 
@@ -74,6 +74,7 @@ public sealed class MirrorcasterRole(IntPtr cppPtr) : CrewmateRole(cppPtr), ITou
 
     public CustomRoleConfiguration Configuration => new(this)
     {
+        IconTmp = TmpSpriteUtils.CreateSpriteAsset(TouRoleIcons.Mirrorcaster.LoadAsset(), "TouMira.Role.Crewmate.Mirrorcaster", 1.45f),
         IntroSound = TouAudio.MirrorcasterIntro,
         OptionsScreenshot = TouBanners.CrewmateRoleBanner,
         Icon = TouRoleIcons.Mirrorcaster

@@ -6,7 +6,6 @@ using MiraAPI.GameOptions;
 using MiraAPI.Modifiers;
 using MiraAPI.Roles;
 using MiraAPI.Utilities;
-using MiraAPI.Utilities.Assets;
 using Reactor.Utilities;
 using TownOfUs.Modifiers;
 using TownOfUs.Modifiers.Neutral;
@@ -55,7 +54,7 @@ public static class ChefEvents
     }
     
     [RegisterEvent]
-    public static void EjectionEventHandler(EjectionEvent @event)
+    public static void EjectionEventHandler(EjectionEvent _)
     {
         var chef = CustomRoleUtils.GetActiveRolesOfType<ChefRole>().FirstOrDefault();
         if (chef != null && chef.TargetsServed && !chef.Player.HasDied())

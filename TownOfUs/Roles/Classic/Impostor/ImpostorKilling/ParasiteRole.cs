@@ -60,6 +60,7 @@ public sealed class ParasiteRole(IntPtr cppPtr) : ImpostorRole(cppPtr), ITownOfU
 
     public CustomRoleConfiguration Configuration => new(this)
     {
+        IconTmp = TmpSpriteUtils.CreateSpriteAsset(TouRoleIcons.Parasite.LoadAsset(), "TouMira.Role.Impostor.Parasite", 1.45f),
         UseVanillaKillButton = false,
         IntroSound = TouAudio.ScreamIntro,
         OptionsScreenshot = TouBanners.ImpostorRoleBanner,
@@ -152,10 +153,7 @@ public sealed class ParasiteRole(IntPtr cppPtr) : ImpostorRole(cppPtr), ITownOfU
         var target = Controlled;
         if (target == null)
         {
-            if (AdvancedMovementUtilities.MobileJoystickR != null)
-            {
-                AdvancedMovementUtilities.MobileJoystickR.ToggleVisuals(false);
-            }
+            AdvancedMovementUtilities.MobileJoystickR?.ToggleVisuals(false);
             _killPendingFromTimer = false;
             return;
         }
@@ -494,11 +492,12 @@ public sealed class ParasiteRole(IntPtr cppPtr) : ImpostorRole(cppPtr), ITownOfU
             return;
         }
 
-        var down = false;
-        var held = false;
-        var up = false;
         Vector2 screenPos;
 
+
+        bool down;
+        bool held;
+        bool up;
         if (Input.touchCount > 0)
         {
             var touch = Input.GetTouch(0);
@@ -776,10 +775,7 @@ public sealed class ParasiteRole(IntPtr cppPtr) : ImpostorRole(cppPtr), ITownOfU
 
             if (target.MyPhysics != null)
             {
-                if (target.MyPhysics.body != null)
-                {
-                    target.MyPhysics.body.velocity = Vector2.zero;
-                }
+                target.MyPhysics.body?.velocity = Vector2.zero;
                 target.MyPhysics.SetNormalizedVelocity(Vector2.zero);
             }
 
@@ -928,8 +924,7 @@ public sealed class ParasiteRole(IntPtr cppPtr) : ImpostorRole(cppPtr), ITownOfU
             }
 
             // Check if player can use this
-            bool canUse;
-            usable.CanUse(player.Data, out canUse, out _);
+            usable.CanUse(player.Data, out bool canUse, out _);
             if (!canUse)
             {
                 continue;

@@ -20,7 +20,7 @@ public sealed class TraitorRole(IntPtr cppPtr)
     public bool CanBeGuessed =>
         RoleManager.Instance.GetRole((RoleTypes)RoleId.Get<TraitorRole>()) is ICustomRole customRole &&
         (int)customRole.GetCount()! > 0 && (int)customRole.GetChance()! > 0 ||
-        (int)OptionGroupSingleton<AllianceModifierOptions>.Instance.CrewpostorChance > 0;
+        (int)OptionGroupSingleton<AllianceModifierOptions>.Instance.CrewpostorChance.Value > 0;
     public bool CanSpawnOnCurrentMode() => false;
     [HideFromIl2Cpp] public List<RoleBehaviour> ChosenRoles { get; } = [];
     [HideFromIl2Cpp] public RoleBehaviour? RandomRole { get; set; }
@@ -55,6 +55,7 @@ public sealed class TraitorRole(IntPtr cppPtr)
 
     public CustomRoleConfiguration Configuration => new(this)
     {
+        IconTmp = TmpSpriteUtils.CreateSpriteAsset(TouRoleIcons.Traitor.LoadAsset(), "TouMira.Role.Impostor.Traitor", 1.45f),
         MaxRoleCount = 1,
         OptionsScreenshot = TouBanners.ImpostorRoleBanner,
         Icon = TouRoleIcons.Traitor
@@ -65,12 +66,12 @@ public sealed class TraitorRole(IntPtr cppPtr)
     {
         get
         {
-            return new List<CustomButtonWikiDescription>
-            {
+            return
+            [
                 new(TouLocale.GetParsed($"TouRole{LocaleKey}ChangeRole", "Change Role"),
                     TouLocale.GetParsed($"TouRole{LocaleKey}ChangeRoleWikiDescription"),
                     TouImpAssets.TraitorSelect)
-            };
+            ];
         }
     }
 

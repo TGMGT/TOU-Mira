@@ -1,7 +1,6 @@
 ﻿using AmongUs.GameOptions;
 using MiraAPI.GameOptions;
 using MiraAPI.Modifiers;
-using MiraAPI.Utilities.Assets;
 using Reactor.Utilities;
 using System.Globalization;
 using TownOfUs.Interfaces;
@@ -268,15 +267,9 @@ public sealed class ParasiteOvertakeButton : TownOfUsKillRoleButton<ParasiteRole
             if (Button.graphic != null)
             {
                 Button.graphic.color = Palette.EnabledColor;
-                if (Button.graphic.material != null)
-                {
-                    Button.graphic.material.SetFloat("_Desat", 0f);
-                }
+                Button.graphic.material?.SetFloat("_Desat", 0f);
             }
-            if (Button.buttonLabelText != null)
-            {
-                Button.buttonLabelText.color = Palette.EnabledColor;
-            }
+            Button.buttonLabelText?.color = Palette.EnabledColor;
         }
     }
 
@@ -306,20 +299,14 @@ public sealed class ParasiteOvertakeButton : TownOfUsKillRoleButton<ParasiteRole
                 ClearAutoDecayCountdownVisual();
             }
 
-            if (Button.graphic != null)
-            {
-                Button.graphic.sprite = TouAssets.KillSprite.LoadAsset();
-            }
+            Button.graphic?.sprite = TouAssets.KillSprite.LoadAsset();
         }
         else
         {
             OverrideName(_infectName);
             ClearAutoDecayCountdownVisual();
 
-            if (Button.graphic != null)
-            {
-                Button.graphic.sprite = TouImpAssets.OvertakeSprite.LoadAsset();
-            }
+            Button.graphic?.sprite = TouImpAssets.OvertakeSprite.LoadAsset();
         }
 
         base.FixedUpdate(playerControl);

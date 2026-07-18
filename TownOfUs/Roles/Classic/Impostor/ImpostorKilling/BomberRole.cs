@@ -40,6 +40,7 @@ public sealed class BomberRole(IntPtr cppPtr)
 
     public CustomRoleConfiguration Configuration => new(this)
     {
+        IconTmp = TmpSpriteUtils.CreateSpriteAsset(TouRoleIcons.Bomber.LoadAsset(), "TouMira.Role.Impostor.Bomber", 1.45f),
         Icon = TouRoleIcons.Bomber,
         IntroSound = TouAudio.ExplodeIntro,
         OptionsScreenshot = TouBanners.ImpostorRoleBanner,
@@ -53,13 +54,13 @@ public sealed class BomberRole(IntPtr cppPtr)
     {
         get
         {
-            return new List<CustomButtonWikiDescription>
-            {
+            return
+            [
                 new(TouLocale.GetParsed($"TouRole{LocaleKey}Place", "Place"),
                     TouLocale.GetParsed($"TouRole{LocaleKey}PlaceWikiDescription").Replace("<maxKills>",
                         $"{(int)OptionGroupSingleton<BomberOptions>.Instance.MaxKillsInDetonation}"),
                     TouImpAssets.PlaceSprite)
-            };
+            ];
         }
     }
 
