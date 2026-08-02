@@ -15,6 +15,7 @@ using TMPro;
 using TownOfUs.Interfaces;
 using TownOfUs.Modifiers;
 using TownOfUs.Modifiers.Game;
+using TownOfUs.Modifiers.Game.Assailant;
 using TownOfUs.Options;
 using TownOfUs.Options.Maps;
 using TownOfUs.Roles;
@@ -103,7 +104,6 @@ public sealed class IngameWikiMinigame(nint cppPtr) : Minigame(cppPtr)
             [
                 OptionGroupSingleton<GeneralOptions>.Instance, OptionGroupSingleton<VanillaTweakOptions>.Instance,
                 OptionGroupSingleton<GameMechanicOptions>.Instance, OptionGroupSingleton<PostmortemOptions>.Instance,
-                OptionGroupSingleton<GameTimerOptions>.Instance, OptionGroupSingleton<TaskTrackingOptions>.Instance
             ], TouRoleIcons.Engineer));
         instance._activeSettings.Add(new OptionWikiInfo("WikiSettingsMapsSabotageSettingsTitle",
             [
@@ -350,7 +350,7 @@ public sealed class IngameWikiMinigame(nint cppPtr) : Minigame(cppPtr)
         }
 
         TownOfUsColors.UseBasic =
-            LocalSettingsTabSingleton<TownOfUsLocalRoleSettings>.Instance.UseCrewmateTeamColorToggle.Value;
+            LocalSettingsTabSingleton<TouLocalTabPlayers>.Instance.UseCrewmateTeamColorToggle.Value;
     }
 
     private void LoadSettingsScreen()
@@ -939,7 +939,7 @@ public sealed class IngameWikiMinigame(nint cppPtr) : Minigame(cppPtr)
                         }
                     }
 
-                    var modInfoTxt = RemoveNonCaps(modifier.ParentMod.MiraPlugin.OptionsTitleText);
+                    var modInfoTxt = modifier.ParentMod.MiraPlugin.GetAbbreviatedModName();
 
                     var newItem = CreateNewModifierItem(modifier, modifier.ModifierIcon?.LoadAsset(), alignment, color,
                         modInfoTxt);
@@ -1022,7 +1022,7 @@ public sealed class IngameWikiMinigame(nint cppPtr) : Minigame(cppPtr)
                         {
                             continue;
                         }
-                        modInfoTxt = RemoveNonCaps(customRole.ParentMod.MiraPlugin.OptionsTitleText);
+                        modInfoTxt = customRole.ParentMod.MiraPlugin.GetAbbreviatedModName();
 
                         if (customRole.Team is ModdedRoleTeams.Crewmate)
                         {
@@ -1171,7 +1171,7 @@ public sealed class IngameWikiMinigame(nint cppPtr) : Minigame(cppPtr)
         }
 
         TownOfUsColors.UseBasic =
-            LocalSettingsTabSingleton<TownOfUsLocalRoleSettings>.Instance.UseCrewmateTeamColorToggle.Value;
+            LocalSettingsTabSingleton<TouLocalTabPlayers>.Instance.UseCrewmateTeamColorToggle.Value;
     }
 
     [HideFromIl2Cpp]
@@ -1188,11 +1188,6 @@ public sealed class IngameWikiMinigame(nint cppPtr) : Minigame(cppPtr)
         _selectedItem = null;
         _selectedSoftItem = softWikiInfo;
         UpdatePage(WikiPage.DetailScreen);
-    }
-
-    private static string RemoveNonCaps(string text)
-    {
-        return new string(text.Where(c => !Char.IsLower(c) && !Char.IsWhiteSpace(c)).ToArray());
     }
 }
 

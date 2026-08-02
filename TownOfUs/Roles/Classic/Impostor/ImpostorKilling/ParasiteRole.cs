@@ -332,7 +332,7 @@ public sealed class ParasiteRole(IntPtr cppPtr) : ImpostorRole(cppPtr), ITownOfU
             return;
         }
 
-        var locSetting = LocalSettingsTabSingleton<TownOfUsLocalRoleSettings>.Instance.ParasitePiPLocation.Value;
+        var locSetting = LocalSettingsTabSingleton<TouLocalTabGameplay>.Instance.ParasitePiPLocation.Value;
         var sizeMultiplier = ParasitePiPUtilities.GetScaleMultiplier();
 
         ParasitePiPLocation location;
@@ -661,11 +661,12 @@ public sealed class ParasiteRole(IntPtr cppPtr) : ImpostorRole(cppPtr), ITownOfU
 
         if (controllerNotification == null)
         {
-            var controllerText = TouLocale.GetParsed("TouRoleParasiteControlNotif", $"You are controlling {Controlled.Data.PlayerName}!");
+            var controllerText = TouLocale.GetParsed("TouRoleParasiteOvertakeNotifSelf");
             controllerNotification = Helpers.CreateAndShowNotification(
                 $"<b>{TownOfUsColors.Impostor.ToTextColor()}{controllerText.Replace("<player>", Controlled.Data.PlayerName)}</color></b>",
                 Color.white, new Vector3(0f, 2f, -20f), spr: TouRoleIcons.Parasite.LoadAsset());
-            controllerNotification?.AdjustNotification();
+            controllerNotification.AdjustNotification();
+            controllerNotification.alphaTimer = OptionGroupSingleton<PuppeteerOptions>.Instance.ControlDuration.Value;
         }
     }
 
